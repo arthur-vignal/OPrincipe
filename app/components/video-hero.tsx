@@ -7,16 +7,13 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "@remix-run/react";
 
 /**
- * VideoHero — split horizontal layout, 50/50:
- *   left: manifesto text + "Acessar Coleção" CTA, vertically centered
- *   right: the ASCII car video filling the entire right half with
- *           object-cover (no black bars; crop instead).
+ * VideoHero — full-bleed ASCII video taking the entire viewport with
+ * the manifesto overlay in white on top, left-aligned, vertically
+ * centered. The text is small (mono terminal feel) and the
+ * 'Acessar Coleção' CTA sits below as a small white pill.
  *
- * Manifesto overlay is in the LEFT column only — never invades the
- * video. Animated via CorruptedText (glyph-by-glyph scramble).
- *
- * When videoSrc is undefined, the right half shows a PlaceholderPattern
- * so the layout still has visual weight.
+ * When videoSrc is undefined, a black placeholder with scanlines is
+ * shown so the hero still has visual weight.
  */
 export function VideoHero({
   videoSrc,
@@ -44,65 +41,69 @@ export function VideoHero({
   return (
     <section
       className={cn(
-        // Full viewport width. Height = viewport minus top nav.
-        "relative w-screen -mx-[calc((100vw-100%)/2)] overflow-hidden bg-white",
+        "relative w-screen -mx-[calc((100vw-100%)/2)] overflow-hidden bg-black",
         "h-[calc(100vh-3.5rem)] min-h-[480px]",
         className,
       )}
     >
-      <div className="grid h-full w-full" style={{ gridTemplateColumns: "1fr 1fr" }}>
-        {/* LEFT — manifesto + CTA */}
-        <div className="flex flex-col items-start justify-center pl-6 md:pl-10 lg:pl-16 pr-4 md:pr-6">
-          <motion.h1
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-black max-w-full"
-            style={{
-              fontFamily: "Michroma, monospace",
-              fontSize: "clamp(28px, 5.2vw, 72px)",
-              letterSpacing: "-0.015em",
-              lineHeight: 1.1,
-              fontWeight: 400,
-            }}
-          >
+      {/* Background video — full bleed, object-cover, fills entire hero */}
+      {videoSrc ? (
+        <video
+          ref={videoRef}
+          src={videoSrc}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          {videoWebmSrc && <source src={videoWebmSrc} type="video/webm" />}
+        </video>
+      ) : (
+        <PlaceholderPattern />
+      )}
+
+      {/* Manifesto overlay — small white text on the ASCII, left-aligned */}
+      <div className="absolute inset-0 flex flex-col items-start justify-center pl-6 md:pl-10 lg:pl-16 pr-4 md:pr-6 pointer-events-none">
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="text-white max-w-[60%]"
+          style={{
+            fontFamily: "'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace",
+            fontSize: "clamp(9px, 1.1vw, 16px)",
+            letterSpacing: "-0.005em",
+            lineHeight: 1.4,
+            fontWeight: 500,
+            textShadow: "0 0 8px rgba(0,0,0,0.6)",
+          }}
+        >
+          <div className="text-[9px] tracking-[0.32em] uppercase text-white/50 mb-1.5">
+            ◦ PRINCIPIO.txt
+          </div>
+          <h1 className="m-0">
             <CorruptedText text={`[${manifesto}]`} />
-          </motion.h1>
+          </h1>
+          <div className="text-[9px] tracking-[0.18em] text-white/50 mt-1.5">
+            $ <span className="animate-pulse">▌</span>
+          </div>
+        </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.4, duration: 0.5 }}
-            className="mt-8 md:mt-10"
+        <motion.div
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.4, duration: 0.5 }}
+          className="mt-6 pointer-events-auto"
+        >
+          <Link
+            to={collectionHref}
+            className="group inline-flex items-center gap-2 px-4 py-2 border border-white/40 bg-white/10 backdrop-blur-sm text-white text-display text-[10px] tracking-[0.22em] hover:bg-white hover:text-black transition-colors"
           >
-            <Link
-              to={collectionHref}
-              className="group inline-flex items-center gap-2.5 px-6 py-3.5 bg-black text-white text-display text-[11px] tracking-[0.22em] hover:bg-red transition-colors"
-            >
-              ACESSAR COLEÇÃO
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </motion.div>
-        </div>
-
-        {/* RIGHT — video, object-cover to crop */}
-        <div className="relative h-full w-full overflow-hidden bg-black">
-          {videoSrc ? (
-            <video
-              ref={videoRef}
-              src={videoSrc}
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="absolute inset-0 w-full h-full object-cover"
-            >
-              {videoWebmSrc && <source src={videoWebmSrc} type="video/webm" />}
-            </video>
-          ) : (
-            <PlaceholderPattern />
-          )}
-        </div>
+            ACESSAR COLEÇÃO
+            <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </motion.div>
       </div>
     </section>
   );
