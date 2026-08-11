@@ -40,41 +40,41 @@ export async function action({ request }: ActionFunctionArgs) {
 export default function CartRoute() {
   const { lines, totals } = useLoaderData<typeof loader>();
   return (
-    <div className="min-h-screen bg-bg text-fg">
+    <div className="min-h-screen bg-white text-black">
       <TopNav />
       <main className="pt-28 pb-24 px-6 md:px-10">
         <div className="max-w-[1000px] mx-auto">
-          <div className="text-[10.5px] tracking-[0.3em] text-fg/40 mb-3">
+          <div className="text-[10.5px] tracking-[0.3em] text-black/40 mb-3">
             SACOLA
           </div>
           <h1 className="text-display text-[40px] md:text-[56px] tracking-[-0.03em] mb-10">
             CARRINHO
           </h1>
           {lines.length === 0 ? (
-            <div className="border border-fg/10 px-8 py-16 text-center">
-              <p className="text-display text-[12px] tracking-[0.22em] text-fg/50">
+            <div className="border border-black/10 px-8 py-16 text-center">
+              <p className="text-display text-[12px] tracking-[0.22em] text-black/50">
                 CARRINHO VAZIO
               </p>
               <a
                 href="/collections/club-001-virtu"
-                className="inline-block mt-6 text-display text-[11px] tracking-[0.22em] text-fg border-b border-fg/40 hover:border-red hover:text-red transition-colors pb-1"
+                className="inline-block mt-6 text-display text-[11px] tracking-[0.22em] text-black border-b border-black/40 hover:border-red hover:text-red transition-colors pb-1"
               >
                 VER A COLEÇÃO →
               </a>
             </div>
           ) : (
             <>
-              <div className="border-t border-fg/10">
+              <div className="border-t border-black/10">
                 {lines.map((l) => (
                   <CartLineFull key={l.id} line={l} />
                 ))}
               </div>
-              <div className="mt-10 flex flex-col md:flex-row items-start md:items-end justify-between gap-6 border-t border-fg/10 pt-6">
+              <div className="mt-10 flex flex-col md:flex-row items-start md:items-end justify-between gap-6 border-t border-black/10 pt-6">
                 <div>
-                  <div className="text-[10px] tracking-[0.22em] text-fg/40">
+                  <div className="text-[10px] tracking-[0.22em] text-black/40">
                     SUBTOTAL ({totals.count} {totals.count === 1 ? "peça" : "peças"})
                   </div>
-                  <div className="num text-[28px] text-fg mt-1">
+                  <div className="num text-[28px] text-black mt-1">
                     {formatMoney({ amount: totals.subtotal.toFixed(2), currencyCode: "BRL" })}
                   </div>
                 </div>
@@ -96,20 +96,20 @@ export default function CartRoute() {
 
 function CartLineFull({ line }: { line: any }) {
   return (
-    <div className="border-b border-fg/10 py-6 flex items-center gap-6">
-      <img src={line.image} alt="" className="w-24 h-28 object-cover bg-bg" />
+    <div className="border-b border-black/10 py-6 flex items-center gap-6">
+      <img src={line.image} alt="" className="w-24 h-28 object-cover bg-white" />
       <div className="flex-1 min-w-0">
         <div className="text-display text-[12px] tracking-[0.18em]">
           {line.productTitle}
         </div>
-        <div className="text-[10px] tracking-[0.22em] text-fg/50 mt-1">
+        <div className="text-[10px] tracking-[0.22em] text-black/50 mt-1">
           TAMANHO {line.variantTitle}
         </div>
-        <div className="num text-fg/85 text-[14px] mt-2">
+        <div className="num text-black/85 text-[14px] mt-2">
           {formatMoney(line.price)} × {line.quantity}
         </div>
       </div>
-      <div className="num text-fg text-[18px]">
+      <div className="num text-black text-[18px]">
         {formatMoney({
           amount: (Number(line.price.amount) * line.quantity).toFixed(2),
           currencyCode: "BRL",

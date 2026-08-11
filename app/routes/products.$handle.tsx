@@ -59,13 +59,13 @@ export default function ProductRoute() {
   const selectedVariant = product.variants.find((v) => v.id === variantId)!;
 
   return (
-    <div className="min-h-screen bg-bg text-fg">
+    <div className="min-h-screen bg-white text-black">
       <TopNav />
       <main className="pt-24 pb-24 px-6 md:px-10">
         <div className="max-w-[1440px] mx-auto">
           <Link
             to="/collections/club-001-virtu"
-            className="inline-flex items-center gap-1.5 text-[10.5px] tracking-[0.22em] text-fg/50 hover:text-fg transition-colors mb-8"
+            className="inline-flex items-center gap-1.5 text-[10.5px] tracking-[0.22em] text-black/50 hover:text-black transition-colors mb-8"
           >
             <ChevronLeft className="w-3.5 h-3.5" />
             VOLTAR
@@ -78,7 +78,7 @@ export default function ProductRoute() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3 }}
-                className="aspect-[3/4] bg-bg overflow-hidden"
+                className="aspect-[3/4] bg-white overflow-hidden"
               >
                 <img
                   src={product.images[imageIdx]?.url}
@@ -93,7 +93,7 @@ export default function ProductRoute() {
                       key={i}
                       onClick={() => setImageIdx(i)}
                       className={`w-16 h-20 border ${
-                        i === imageIdx ? "border-red" : "border-fg/20"
+                        i === imageIdx ? "border-red" : "border-black/20"
                       } overflow-hidden`}
                     >
                       <img
@@ -115,16 +115,16 @@ export default function ProductRoute() {
               <h1 className="text-display text-[28px] md:text-[42px] tracking-[-0.02em] leading-tight">
                 {product.title}
               </h1>
-              <div className="num text-fg/85 text-[20px] mt-5">
+              <div className="num text-black/85 text-[20px] mt-5">
                 {formatMoney(product.priceRange.minVariantPrice)}
               </div>
-              <p className="text-serif-italic text-fg/65 text-[15px] mt-6 leading-relaxed">
+              <p className="text-serif-italic text-black/65 text-[15px] mt-6 leading-relaxed">
                 {product.description}
               </p>
 
               {/* Sizes */}
               <div className="mt-10">
-                <div className="text-[10px] tracking-[0.22em] text-fg/50 mb-3">
+                <div className="text-[10px] tracking-[0.22em] text-black/50 mb-3">
                   TAMANHO
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -134,8 +134,8 @@ export default function ProductRoute() {
                       onClick={() => setVariantId(v.id)}
                       className={`min-w-[56px] h-11 border px-3 text-display text-[12px] tracking-[0.16em] transition-colors ${
                         v.id === variantId
-                          ? "border-fg text-fg bg-fg/5"
-                          : "border-fg/25 text-fg/65 hover:border-fg/60 hover:text-fg"
+                          ? "border-black text-black bg-fg/5"
+                          : "border-black/25 text-black/65 hover:border-black/60 hover:text-black"
                       }`}
                     >
                       {v.title}
@@ -170,9 +170,9 @@ export default function ProductRoute() {
               )}
 
               {/* Meta */}
-              <div className="mt-12 pt-8 border-t border-fg/10 space-y-4 text-[12px] text-fg/55">
+              <div className="mt-12 pt-8 border-t border-black/10 space-y-4 text-[12px] text-black/55">
                 <div>
-                  <span className="text-fg/40 tracking-[0.18em] text-[10px] uppercase">
+                  <span className="text-black/40 tracking-[0.18em] text-[10px] uppercase">
                     ENVIO
                   </span>
                   <p className="mt-1">
@@ -181,13 +181,13 @@ export default function ProductRoute() {
                   </p>
                 </div>
                 <div>
-                  <span className="text-fg/40 tracking-[0.18em] text-[10px] uppercase">
+                  <span className="text-black/40 tracking-[0.18em] text-[10px] uppercase">
                     TROCAS
                   </span>
                   <p className="mt-1">30 dias após o recebimento.</p>
                 </div>
                 <div>
-                  <span className="text-fg/40 tracking-[0.18em] text-[10px] uppercase">
+                  <span className="text-black/40 tracking-[0.18em] text-[10px] uppercase">
                     NÚMERO
                   </span>
                   <p className="mt-1 num">#{product.id.slice(-4)}</p>

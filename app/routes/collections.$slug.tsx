@@ -20,7 +20,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
 export default function CollectionRoute() {
   const { products, slug } = useLoaderData<typeof loader>();
   return (
-    <div className="min-h-screen bg-bg text-fg">
+    <div className="min-h-screen bg-white text-black">
       <TopNav />
       <main className="pt-28 pb-24 px-6 md:px-10">
         <div className="max-w-[1440px] mx-auto">
@@ -30,13 +30,13 @@ export default function CollectionRoute() {
             transition={{ duration: 0.5 }}
             className="mb-14 md:mb-20"
           >
-            <div className="text-[10.5px] tracking-[0.3em] text-fg/40 mb-3">
+            <div className="text-[10.5px] tracking-[0.3em] text-black/40 mb-3">
               COLEÇÃO
             </div>
             <h1 className="text-display text-[40px] md:text-[64px] tracking-[-0.03em] uppercase">
               {slug}
             </h1>
-            <p className="max-w-lg mt-5 text-serif-italic text-fg/65 text-[15px]">
+            <p className="max-w-lg mt-5 text-serif-italic text-black/65 text-[15px]">
               {products.length} peças. Cada uma bordada, numerada, pensada.
             </p>
           </motion.div>

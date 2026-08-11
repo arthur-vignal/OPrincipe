@@ -67,18 +67,19 @@ export function VideoHero({
         <PlaceholderPattern />
       )}
 
-      {/* Manifesto overlay — touches left edge, vertically centered */}
-      <div className="absolute inset-0 flex items-center pl-3 md:pl-6 pr-3 md:pr-6 pointer-events-none">
+      {/* Manifesto overlay — touches left edge, vertically centered, NO background.
+          Pure text sitting on top of the video. */}
+      <div className="absolute inset-0 flex items-center pl-4 md:pl-8 pr-4 md:pr-8 pointer-events-none">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6, duration: 0.6 }}
-          className="bg-black/40 text-white px-3 md:px-4 py-2 md:py-3 max-w-[55%] leading-[1.05]"
+          className="max-w-[55%] text-white"
           style={{
             fontFamily: "Michroma, monospace",
-            fontSize: "clamp(48px, 10vw, 172px)",
-            letterSpacing: "-0.02em",
-            lineHeight: 1.0,
+            fontSize: "clamp(20px, 3.2vw, 48px)",
+            letterSpacing: "-0.01em",
+            lineHeight: 1.15,
           }}
         >
           <CorruptedText text={`[${manifesto}]`} />

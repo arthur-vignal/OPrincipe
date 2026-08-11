@@ -23,7 +23,7 @@ export function ProductCard({ product }: { product: Product }) {
       <motion.div
         whileHover={{ scale: 1.02 }}
         transition={{ type: "spring", stiffness: 220, damping: 22 }}
-        className="relative aspect-[3/4] overflow-hidden bg-bg"
+        className="relative aspect-[3/4] overflow-hidden bg-white"
       >
         {/* Front image */}
         <motion.img
@@ -60,20 +60,20 @@ export function ProductCard({ product }: { product: Product }) {
         </div>
         {/* Bottom overlay with title on hover */}
         <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <span className="text-display text-[10px] tracking-[0.2em] text-fg/85">
+          <span className="text-display text-[10px] tracking-[0.2em] text-black/85">
             VER DETALHES →
           </span>
         </div>
       </motion.div>
       <div className="mt-3 px-1">
-        <h3 className="text-display text-[11px] tracking-[0.18em] text-fg">
+        <h3 className="text-display text-[11px] tracking-[0.18em] text-black">
           {product.title}
         </h3>
         <div className="flex items-baseline justify-between mt-1.5">
-          <span className="num text-[12.5px] text-fg/80">
+          <span className="num text-[12.5px] text-black/80">
             {formatMoney(product.priceRange.minVariantPrice)}
           </span>
-          <span className="text-[9.5px] tracking-[0.2em] text-fg/40">
+          <span className="text-[9.5px] tracking-[0.2em] text-black/40">
             {product.variants.length} TAMANHOS
           </span>
         </div>

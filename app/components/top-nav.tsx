@@ -24,13 +24,13 @@ export function TopNav() {
               to="/"
               className="tracking-[0.18em] text-black hover:text-red transition-colors"
             >
-              O PRINCIPE
+              [ O PRINCIPE ]
             </Link>
             <Link
               to="/collections/club-001-virtu"
               className="tracking-[0.18em] text-black hover:text-red transition-colors"
             >
-              CLUB-001
+              [ CLUB-001 ]
             </Link>
           </nav>
           <button
@@ -99,7 +99,7 @@ function CartDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 30, stiffness: 280 }}
-            className="fixed top-0 right-0 bottom-0 z-50 w-full max-w-md bg-white border-l border-black/15 flex flex-col text-black"
+            className="fixed top-0 right-0 bottom-0 z-50 w-full max-w-md bg-white border-l border-black/15 flex flex-col text-black shadow-2xl"
           >
             <div className="flex items-center justify-between px-6 py-4 border-b border-black/10">
               <span className="text-display text-[12px] tracking-[0.18em]">CART</span>
