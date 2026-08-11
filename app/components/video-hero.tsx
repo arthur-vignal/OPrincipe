@@ -3,30 +3,32 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { CorruptedText } from "./corrupted-text";
+import { ArrowRight } from "lucide-react";
+import { Link } from "@remix-run/react";
 
 /**
- * VideoHero — full-bleed (100vw) hero that overflows past the
- * viewport bottom and is cropped via object-cover. The video fills
- * the entire width with no side margins; the top nav sits on top of
- * it as an overlay.
+ * VideoHero — split horizontal layout, 50/50:
+ *   left: manifesto text + "Acessar Coleção" CTA, vertically centered
+ *   right: the ASCII car video filling the entire right half with
+ *           object-cover (no black bars; crop instead).
  *
- * Manifesto overlay: black monospace text on a translucent black
- * card, sized to ~half the viewport, left-aligned, NO side margins
- * (touches the left edge with breathing room). Wrapped in [ ].
- * Animated via CorruptedText (glyph-by-glyph scramble).
+ * Manifesto overlay is in the LEFT column only — never invades the
+ * video. Animated via CorruptedText (glyph-by-glyph scramble).
  *
- * When videoSrc is undefined, a PlaceholderPattern fills the slot
- * so the hero still has visual weight.
+ * When videoSrc is undefined, the right half shows a PlaceholderPattern
+ * so the layout still has visual weight.
  */
 export function VideoHero({
   videoSrc,
   videoWebmSrc,
   manifesto,
+  collectionHref = "/collections/club-001-virtu",
   className,
 }: {
   videoSrc?: string;
   videoWebmSrc?: string;
   manifesto: string;
+  collectionHref?: string;
   className?: string;
 }) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -42,48 +44,65 @@ export function VideoHero({
   return (
     <section
       className={cn(
-        // Full bleed: spans entire viewport width, no horizontal padding.
-        // Height: viewport minus the top nav (h-14 = 3.5rem).
-        // Overflow past the bottom is cropped by the next section.
-        "relative w-screen -mx-[calc((100vw-100%)/2)] overflow-hidden bg-black",
+        // Full viewport width. Height = viewport minus top nav.
+        "relative w-screen -mx-[calc((100vw-100%)/2)] overflow-hidden bg-white",
         "h-[calc(100vh-3.5rem)] min-h-[480px]",
         className,
       )}
     >
-      {/* Background video — object-cover to fill entire width */}
-      {videoSrc ? (
-        <video
-          ref={videoRef}
-          src={videoSrc}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-        >
-          {videoWebmSrc && <source src={videoWebmSrc} type="video/webm" />}
-        </video>
-      ) : (
-        <PlaceholderPattern />
-      )}
+      <div className="grid h-full w-full" style={{ gridTemplateColumns: "1fr 1fr" }}>
+        {/* LEFT — manifesto + CTA */}
+        <div className="flex flex-col items-start justify-center pl-6 md:pl-10 lg:pl-16 pr-4 md:pr-6">
+          <motion.h1
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="text-black max-w-full"
+            style={{
+              fontFamily: "Michroma, monospace",
+              fontSize: "clamp(28px, 5.2vw, 72px)",
+              letterSpacing: "-0.015em",
+              lineHeight: 1.1,
+              fontWeight: 400,
+            }}
+          >
+            <CorruptedText text={`[${manifesto}]`} />
+          </motion.h1>
 
-      {/* Manifesto overlay — touches left edge, vertically centered, NO background.
-          Pure text sitting on top of the video. */}
-      <div className="absolute inset-0 flex items-center pl-4 md:pl-8 pr-4 md:pr-8 pointer-events-none">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6, duration: 0.6 }}
-          className="max-w-[55%] text-white"
-          style={{
-            fontFamily: "Michroma, monospace",
-            fontSize: "clamp(20px, 3.2vw, 48px)",
-            letterSpacing: "-0.01em",
-            lineHeight: 1.15,
-          }}
-        >
-          <CorruptedText text={`[${manifesto}]`} />
-        </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.4, duration: 0.5 }}
+            className="mt-8 md:mt-10"
+          >
+            <Link
+              to={collectionHref}
+              className="group inline-flex items-center gap-2.5 px-6 py-3.5 bg-black text-white text-display text-[11px] tracking-[0.22em] hover:bg-red transition-colors"
+            >
+              ACESSAR COLEÇÃO
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </motion.div>
+        </div>
+
+        {/* RIGHT — video, object-cover to crop */}
+        <div className="relative h-full w-full overflow-hidden bg-black">
+          {videoSrc ? (
+            <video
+              ref={videoRef}
+              src={videoSrc}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover"
+            >
+              {videoWebmSrc && <source src={videoWebmSrc} type="video/webm" />}
+            </video>
+          ) : (
+            <PlaceholderPattern />
+          )}
+        </div>
       </div>
     </section>
   );
@@ -94,15 +113,13 @@ function cn(...args: any[]) {
 }
 
 /**
- * PlaceholderPattern — used until the user uploads the ASCII car
- * video. Renders a black background with a subtle scanline grid +
- * "VIDEO PENDING" centered text. Keeps the hero height stable so the
- * page below it doesn't shift when the real video lands.
+ * PlaceholderPattern — used until the user uploads the video.
+ * Black bg + scanlines + 'VIDEO PENDING' centered text. Only fills
+ * the right half of the hero (the video column).
  */
 function PlaceholderPattern() {
   return (
     <div className="absolute inset-0 w-full h-full bg-black overflow-hidden">
-      {/* scanlines */}
       <div
         aria-hidden
         className="absolute inset-0 opacity-30"
@@ -111,7 +128,6 @@ function PlaceholderPattern() {
             "repeating-linear-gradient(0deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 4px)",
         }}
       />
-      {/* centered text */}
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="text-center text-white/40">
           <div className="text-display text-[10px] tracking-[0.32em] mb-2">
