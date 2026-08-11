@@ -26,7 +26,7 @@ export default function Index() {
       {/* Hero — full-bleed video with manifesto overlay */}
       <section className="pt-14">
         <VideoHero
-          videoSrc="/videos/hero-ascii-tiny.mp4"
+          videoSrc="/videos/hero-web.mp4"
           manifesto="Todos veem o que tu aparentas, poucos sentem aquilo que tu és."
         />
       </section>
