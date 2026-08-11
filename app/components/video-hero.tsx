@@ -69,13 +69,11 @@ export function VideoHero({
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-white max-w-[60%] m-0"
+          className="text-white m-0"
           style={{
-            fontFamily: "Michroma, sans-serif",
-            fontSize: "clamp(28px, 5.2vw, 72px)",
-            letterSpacing: "-0.015em",
-            lineHeight: 1.1,
-            fontWeight: 400,
+            fontFamily: "Sekuya, Michroma, sans-serif",
+            fontSize: "80px",
+            lineHeight: 1.0,
             textShadow: "0 2px 8px rgba(0,0,0,0.9), 0 0 24px rgba(0,0,0,0.6)",
           }}
         >
