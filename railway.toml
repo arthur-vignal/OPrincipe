@@ -1,0 +1,16 @@
+[build]
+builder = "NIXPACKS"
+
+[deploy]
+startCommand = "npm start"
+healthcheckPath = "/"
+healthcheckTimeout = 300
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3
+
+# Env vars are managed via the Railway dashboard (variables tab)
+# Required at deploy:
+#   SHOPIFY_STORE_DOMAIN
+#   SHOPIFY_STOREFRONT_API_TOKEN
+#   SHOPIFY_API_VERSION
+#   PORT (Railway injects this automatically)
