@@ -8,15 +8,23 @@ import {
   getProductByHandle,
   formatMoney,
 } from "~/lib/mock-storefront";
+import { fetchProductByHandle } from "~/lib/shopify.server";
 import { addToCart } from "~/lib/cart.server";
 import { TopNav } from "~/components/top-nav";
 
 export async function loader({ params }: LoaderFunctionArgs) {
-  const product = getProductByHandle(params.handle ?? "");
+  const handle = params.handle ?? "";
+  try {
+    const product = await fetchProductByHandle(handle);
+    if (product) return { product, source: "shopify" };
+  } catch (err) {
+    console.error("[product] Shopify fetch failed, using mock:", err);
+  }
+  const product = getProductByHandle(handle);
   if (!product) {
     throw new Response("Not Found", { status: 404 });
   }
-  return { product };
+  return { product, source: "mock" };
 }
 
 export async function action({ request, params }: ActionFunctionArgs) {

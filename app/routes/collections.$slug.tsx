@@ -2,12 +2,19 @@ import type { LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { motion } from "framer-motion";
 import { getProductsByCollection } from "~/lib/mock-storefront";
+import { fetchProductsByCollection } from "~/lib/shopify.server";
 import { TopNav } from "~/components/top-nav";
 import { ProductCard } from "~/components/product-card";
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const slug = params.slug ?? "";
-  return { products: getProductsByCollection(slug), slug };
+  try {
+    const products = await fetchProductsByCollection(slug, 25);
+    if (products.length > 0) return { products, slug, source: "shopify" };
+  } catch (err) {
+    console.error("[collection] Shopify fetch failed, using mock:", err);
+  }
+  return { products: getProductsByCollection(slug), slug, source: "mock" };
 }
 
 export default function CollectionRoute() {

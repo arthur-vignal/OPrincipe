@@ -2,11 +2,18 @@ import type { LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData, Link } from "@remix-run/react";
 import { motion } from "framer-motion";
 import { PRODUCTS, formatMoney } from "~/lib/mock-storefront";
+import { fetchAllProducts } from "~/lib/shopify.server";
 import { TopNav } from "~/components/top-nav";
 import { ProductCard } from "~/components/product-card";
 
 export async function loader(_args: LoaderFunctionArgs) {
-  return { products: PRODUCTS };
+  try {
+    const products = await fetchAllProducts(25);
+    if (products.length > 0) return { products, source: "shopify" };
+  } catch (err) {
+    console.error("[home] Shopify fetch failed, using mock:", err);
+  }
+  return { products: PRODUCTS, source: "mock" };
 }
 
 export default function Index() {
