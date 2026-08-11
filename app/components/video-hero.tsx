@@ -53,21 +53,31 @@ export function VideoHero({
       <div className="grid h-full w-full" style={{ gridTemplateColumns: "1fr 1fr" }}>
         {/* LEFT — manifesto + CTA */}
         <div className="flex flex-col items-start justify-center pl-6 md:pl-10 lg:pl-16 pr-4 md:pr-6">
-          <motion.h1
+          <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="text-black max-w-full"
             style={{
-              fontFamily: "Michroma, monospace",
-              fontSize: "clamp(28px, 5.2vw, 72px)",
+              fontFamily: "'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace",
+              fontSize: "clamp(20px, 3.4vw, 52px)",
               letterSpacing: "-0.015em",
-              lineHeight: 1.1,
-              fontWeight: 400,
+              lineHeight: 1.25,
+              fontWeight: 500,
             }}
           >
-            <CorruptedText text={`[${manifesto}]`} />
-          </motion.h1>
+            {/* Prompt + text */}
+            <div className="text-[12px] tracking-[0.32em] uppercase text-black/40 mb-3">
+              ◦ PRINCIPIO.txt
+            </div>
+            <h1 className="m-0">
+              <CorruptedText text={`[${manifesto}]`} />
+            </h1>
+            {/* Footer prompt */}
+            <div className="text-[12px] tracking-[0.18em] text-black/40 mt-3">
+              $ <span className="animate-pulse">▌</span>
+            </div>
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 8 }}
