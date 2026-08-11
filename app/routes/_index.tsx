@@ -25,7 +25,10 @@ export default function Index() {
 
       {/* Hero — full-bleed video with manifesto overlay */}
       <section className="pt-14">
-        <VideoHero manifesto="Todos veem o que tu aparentas, poucos sentem aquilo que tu és." />
+        <VideoHero
+          videoSrc="/videos/hero.mp4"
+          manifesto="Todos veem o que tu aparentas, poucos sentem aquilo que tu és."
+        />
       </section>
 
       {/* Products grid */}
