@@ -17,25 +17,25 @@ export function TopNav() {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <header className="fixed top-0 inset-x-0 z-40 bg-bg/80 backdrop-blur-sm border-b border-fg/10">
+      <header className="fixed top-0 inset-x-0 z-40 bg-white border-b border-black/10">
         <div className="max-w-[1440px] mx-auto px-6 md:px-10 h-14 flex items-center justify-between">
           <nav className="flex items-center gap-7 text-display text-[12px]">
             <Link
               to="/"
-              className="tracking-[0.18em] text-fg hover:text-red transition-colors"
+              className="tracking-[0.18em] text-black hover:text-red transition-colors"
             >
               O PRINCIPE
             </Link>
             <Link
               to="/collections/club-001-virtu"
-              className="tracking-[0.18em] text-fg hover:text-red transition-colors"
+              className="tracking-[0.18em] text-black hover:text-red transition-colors"
             >
-              CLUB001
+              CLUB-001
             </Link>
           </nav>
           <button
             onClick={() => setOpen(true)}
-            className="text-display text-[11px] tracking-[0.18em] inline-flex items-center gap-2 hover:text-red transition-colors"
+            className="text-display text-[11px] tracking-[0.18em] inline-flex items-center gap-2 text-black hover:text-red transition-colors"
             aria-label="Abrir carrinho"
           >
             <ShoppingBag className="w-4 h-4" />
@@ -75,7 +75,7 @@ function CartCount() {
     return () => clearInterval(id);
   }, []);
   return (
-    <span className="num text-[10px] text-fg/70">
+    <span className="num text-[10px] text-black/70">
       {count > 0 ? `(${count})` : "(0)"}
     </span>
   );
@@ -99,13 +99,13 @@ function CartDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 30, stiffness: 280 }}
-            className="fixed top-0 right-0 bottom-0 z-50 w-full max-w-md bg-bg border-l border-fg/15 flex flex-col"
+            className="fixed top-0 right-0 bottom-0 z-50 w-full max-w-md bg-white border-l border-black/15 flex flex-col text-black"
           >
-            <div className="flex items-center justify-between px-6 py-4 border-b border-fg/10">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-black/10">
               <span className="text-display text-[12px] tracking-[0.18em]">CART</span>
               <button
                 onClick={onClose}
-                className="text-fg/70 hover:text-fg transition-colors"
+                className="text-black/70 hover:text-black transition-colors"
                 aria-label="Fechar"
               >
                 <X className="w-4 h-4" />
@@ -158,11 +158,11 @@ function CartLines() {
   if (lines.length === 0) {
     return (
       <div className="flex-1 flex flex-col items-center justify-center px-6 text-center">
-        <ShoppingBag className="w-10 h-10 text-fg/30 mb-4" />
-        <p className="text-display text-[12px] tracking-[0.18em] text-fg/60">
+        <ShoppingBag className="w-10 h-10 text-black/30 mb-4" />
+        <p className="text-display text-[12px] tracking-[0.18em] text-black/60">
           CARRINHO VAZIO
         </p>
-        <p className="text-serif-italic text-fg/40 text-[13px] mt-2">
+        <p className="text-serif-italic text-black/40 text-[13px] mt-2">
           O silêncio antes da primeira compra.
         </p>
       </div>
@@ -183,20 +183,20 @@ function CartLines() {
               <Link
                 to={`/products/${l.productHandle}`}
                 onClick={() => window.dispatchEvent(new Event("cart-close"))}
-                className="text-display text-[11px] tracking-[0.16em] text-fg hover:text-red transition-colors line-clamp-2"
+                className="text-display text-[11px] tracking-[0.16em] text-black hover:text-red transition-colors line-clamp-2"
               >
                 {l.productTitle}
               </Link>
-              <div className="text-[10px] tracking-[0.18em] text-fg/50 mt-1">
+              <div className="text-[10px] tracking-[0.18em] text-black/50 mt-1">
                 TAMANHO {l.variantTitle}
               </div>
-              <div className="num text-fg/85 text-[13px] mt-1">
+              <div className="num text-black/85 text-[13px] mt-1">
                 {formatMoney(l.price)}
               </div>
               <div className="flex items-center gap-3 mt-2">
                 <button
                   onClick={() => update(l.id, l.quantity - 1)}
-                  className="w-6 h-6 border border-fg/30 flex items-center justify-center hover:border-red hover:text-red transition-colors"
+                  className="w-6 h-6 border border-black/30 flex items-center justify-center hover:border-red hover:text-red transition-colors"
                   aria-label="Diminuir"
                 >
                   <Minus className="w-3 h-3" />
@@ -206,14 +206,14 @@ function CartLines() {
                 </span>
                 <button
                   onClick={() => update(l.id, l.quantity + 1)}
-                  className="w-6 h-6 border border-fg/30 flex items-center justify-center hover:border-red hover:text-red transition-colors"
+                  className="w-6 h-6 border border-black/30 flex items-center justify-center hover:border-red hover:text-red transition-colors"
                   aria-label="Aumentar"
                 >
                   <Plus className="w-3 h-3" />
                 </button>
                 <button
                   onClick={() => remove(l.id)}
-                  className="ml-auto text-[10px] tracking-[0.16em] text-fg/40 hover:text-red transition-colors"
+                  className="ml-auto text-[10px] tracking-[0.16em] text-black/40 hover:text-red transition-colors"
                 >
                   REMOVER
                 </button>
@@ -222,16 +222,16 @@ function CartLines() {
           </div>
         ))}
       </div>
-      <div className="border-t border-fg/10 px-6 py-4 space-y-3">
+      <div className="border-t border-black/10 px-6 py-4 space-y-3">
         <div className="flex items-baseline justify-between">
-          <span className="text-[11px] tracking-[0.18em] text-fg/60">
+          <span className="text-[11px] tracking-[0.18em] text-black/60">
             SUBTOTAL ({count})
           </span>
-          <span className="num text-fg text-[18px]">
+          <span className="num text-black text-[18px]">
             {formatMoney({ amount: subtotal.toFixed(2), currencyCode: "BRL" })}
           </span>
         </div>
-        <p className="text-serif-italic text-fg/40 text-[12px]">
+        <p className="text-serif-italic text-black/40 text-[12px]">
           Frete e impostos calculados no checkout.
         </p>
         <button
