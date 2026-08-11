@@ -76,7 +76,7 @@ export function VideoHero({
             letterSpacing: "-0.015em",
             lineHeight: 1.1,
             fontWeight: 400,
-            textShadow: "0 0 16px rgba(0,0,0,0.7)",
+            textShadow: "0 2px 8px rgba(0,0,0,0.9), 0 0 24px rgba(0,0,0,0.6)",
           }}
         >
           <CorruptedText text={`[${manifesto}]`} />
