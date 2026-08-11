@@ -5,16 +5,18 @@ import { motion } from "framer-motion";
 import { CorruptedText } from "./corrupted-text";
 
 /**
- * VideoHero — full-bleed landscape (16:9) hero with:
- * - An ASCII car video as background (mp4/webm autoplay muted loop).
- * - A black-on-white corrupted manifesto overlay aligned left,
- *   capped at half the viewport width.
- * - The overlay sits inside the video bounds, with a slight white
- *   padding/glow so it remains readable over the ASCII.
+ * VideoHero — full-bleed (100vw) hero that overflows past the
+ * viewport bottom and is cropped via object-cover. The video fills
+ * the entire width with no side margins; the top nav sits on top of
+ * it as an overlay.
  *
- * When `videoSrc` is undefined (during dev before the user uploads
- * the video), a placeholder pattern is shown so the layout still
- * looks intentional.
+ * Manifesto overlay: black monospace text on a translucent black
+ * card, sized to ~half the viewport, left-aligned, NO side margins
+ * (touches the left edge with breathing room). Wrapped in [ ].
+ * Animated via CorruptedText (glyph-by-glyph scramble).
+ *
+ * When videoSrc is undefined, a PlaceholderPattern fills the slot
+ * so the hero still has visual weight.
  */
 export function VideoHero({
   videoSrc,
@@ -29,7 +31,6 @@ export function VideoHero({
 }) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
-  // Some browsers require an explicit play() call after mount
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
@@ -41,18 +42,19 @@ export function VideoHero({
   return (
     <section
       className={cn(
-        "relative w-full bg-black overflow-hidden",
-        // 16:9 ratio pinned to viewport height for a cinematic hero
-        "aspect-[16/9] max-h-[calc(100vh-3.5rem)]",
+        // Full bleed: spans entire viewport width, no horizontal padding.
+        // Height: viewport minus the top nav (h-14 = 3.5rem).
+        // Overflow past the bottom is cropped by the next section.
+        "relative w-screen -mx-[calc((100vw-100%)/2)] overflow-hidden bg-black",
+        "h-[calc(100vh-3.5rem)] min-h-[480px]",
         className,
       )}
     >
-      {/* Background video (or placeholder) */}
+      {/* Background video — object-cover to fill entire width */}
       {videoSrc ? (
         <video
           ref={videoRef}
           src={videoSrc}
-          poster={undefined}
           autoPlay
           loop
           muted
@@ -65,19 +67,22 @@ export function VideoHero({
         <PlaceholderPattern />
       )}
 
-      {/* Manifesto overlay — black on white, left-aligned, max half width */}
-      <div className="absolute inset-0 pointer-events-none flex items-center">
-        <div className="px-6 md:px-10 w-full">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.6 }}
-            className="max-w-[50%] bg-white/90 backdrop-blur-sm p-5 md:p-7 text-black text-[13px] md:text-[15px] leading-[1.5] font-mono whitespace-pre-wrap"
-            style={{ fontFamily: "Michroma, monospace" }}
-          >
-            <CorruptedText text={`[${manifesto}]`} />
-          </motion.div>
-        </div>
+      {/* Manifesto overlay — touches left edge, vertically centered */}
+      <div className="absolute inset-0 flex items-center pl-3 md:pl-6 pr-3 md:pr-6 pointer-events-none">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6, duration: 0.6 }}
+          className="bg-black/40 text-white px-3 md:px-4 py-2 md:py-3 max-w-[55%] leading-[1.05]"
+          style={{
+            fontFamily: "Michroma, monospace",
+            fontSize: "clamp(48px, 10vw, 172px)",
+            letterSpacing: "-0.02em",
+            lineHeight: 1.0,
+          }}
+        >
+          <CorruptedText text={`[${manifesto}]`} />
+        </motion.div>
       </div>
     </section>
   );
