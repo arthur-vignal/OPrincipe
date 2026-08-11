@@ -18,8 +18,8 @@ export function TopNav() {
   return (
     <>
       <header className="fixed top-0 inset-x-0 z-40 bg-white border-b border-black/10">
-        <div className="max-w-[1440px] mx-auto px-6 md:px-10 h-14 flex items-center justify-between">
-          <nav className="flex items-center gap-7 text-display text-[12px]">
+        <div className="w-full px-6 md:px-10 h-14 flex items-center justify-between">
+          <nav className="flex items-center gap-7 text-display text-[12px] pl-2 md:pl-4">
             <Link
               to="/"
               className="tracking-[0.18em] text-black hover:text-red transition-colors"
