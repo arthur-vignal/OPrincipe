@@ -63,45 +63,37 @@ export function VideoHero({
         <PlaceholderPattern />
       )}
 
-      {/* Manifesto overlay — small white text on the ASCII, left-aligned */}
+      {/* Manifesto overlay — big white Michroma text, left-aligned, no background */}
       <div className="absolute inset-0 flex flex-col items-start justify-center pl-6 md:pl-10 lg:pl-16 pr-4 md:pr-6 pointer-events-none">
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
+        <motion.h1
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-white max-w-[60%]"
+          className="text-white max-w-[60%] m-0"
           style={{
-            fontFamily: "'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace",
-            fontSize: "clamp(9px, 1.1vw, 16px)",
-            letterSpacing: "-0.005em",
-            lineHeight: 1.4,
-            fontWeight: 500,
-            textShadow: "0 0 8px rgba(0,0,0,0.6)",
+            fontFamily: "Michroma, sans-serif",
+            fontSize: "clamp(28px, 5.2vw, 72px)",
+            letterSpacing: "-0.015em",
+            lineHeight: 1.1,
+            fontWeight: 400,
+            textShadow: "0 0 16px rgba(0,0,0,0.7)",
           }}
         >
-          <div className="text-[9px] tracking-[0.32em] uppercase text-white/50 mb-1.5">
-            ◦ PRINCIPIO.txt
-          </div>
-          <h1 className="m-0">
-            <CorruptedText text={`[${manifesto}]`} />
-          </h1>
-          <div className="text-[9px] tracking-[0.18em] text-white/50 mt-1.5">
-            $ <span className="animate-pulse">▌</span>
-          </div>
-        </motion.div>
+          <CorruptedText text={`[${manifesto}]`} />
+        </motion.h1>
 
         <motion.div
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.4, duration: 0.5 }}
-          className="mt-6 pointer-events-auto"
+          className="mt-8 md:mt-10 pointer-events-auto"
         >
           <Link
             to={collectionHref}
-            className="group inline-flex items-center gap-2 px-4 py-2 border border-white/40 bg-white/10 backdrop-blur-sm text-white text-display text-[10px] tracking-[0.22em] hover:bg-white hover:text-black transition-colors"
+            className="group inline-flex items-center gap-2.5 px-6 py-3.5 border border-white/50 bg-white/10 backdrop-blur-sm text-white text-display text-[11px] tracking-[0.22em] hover:bg-white hover:text-black transition-colors"
           >
             ACESSAR COLEÇÃO
-            <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
           </Link>
         </motion.div>
       </div>
