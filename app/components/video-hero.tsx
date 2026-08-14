@@ -7,10 +7,9 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "@remix-run/react";
 
 /**
- * VideoHero — full-bleed ASCII video taking the entire viewport with
- * the manifesto overlay in white on top, left-aligned, vertically
- * centered. The text is small (mono terminal feel) and the
- * 'Acessar Coleção' CTA sits below as a small white pill.
+ * VideoHero — full-bleed background video taking the entire viewport with
+ * the manifesto overlay in white on top, centered both horizontally and
+ * vertically. The 'Acessar Coleção' CTA sits below as a small white pill.
  *
  * When videoSrc is undefined, a black placeholder with scanlines is
  * shown so the hero still has visual weight.
@@ -63,15 +62,15 @@ export function VideoHero({
         <PlaceholderPattern />
       )}
 
-      {/* Manifesto overlay — big white Michroma text, left-aligned, no background */}
-      <div className="absolute inset-0 flex flex-col items-start justify-center pl-6 md:pl-10 lg:pl-16 pr-4 md:pr-6 pointer-events-none">
+      {/* Manifesto overlay — centered, big white Bungee text on the new video background */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center px-4 md:px-6 pointer-events-none">
         <motion.h1
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-white m-0"
+          className="text-white m-0 text-center"
           style={{
-            fontFamily: "Sekuya, Michroma, sans-serif",
+            fontFamily: "Bungee, Michroma, sans-serif",
             fontSize: "80px",
             lineHeight: 1.0,
             textShadow: "0 2px 8px rgba(0,0,0,0.9), 0 0 24px rgba(0,0,0,0.6)",
